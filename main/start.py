@@ -335,7 +335,10 @@ async def main(bot_command: str, channel_url: str):
                             f"checking if dir exist: need-images/need-{need['flaskId']} "
                         )
 
-                        if not os.path.isdir(f"need-images/need-{need['flaskId']}"):
+                        if (
+                            not os.path.isdir(f"need-images/need-{need['flaskId']}")
+                            and need["needRetailerImg"]
+                        ):
                             await open_discord_channel(
                                 page, need, channel_url, bot_command
                             )
