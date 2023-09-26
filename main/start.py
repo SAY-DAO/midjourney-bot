@@ -300,6 +300,13 @@ async def open_discord_channel(page, need, channel_url: str, bot_command: str):
 async def main(bot_command: str, channel_url: str):
     try:
         browser = None
+        # Opening JSON file
+        f = open("../midjourney.json")
+        # returns JSON object as a dictionary
+        needData = json.load(f)
+        logger.info(len(needData))
+        # if len(needData) == k:
+            # logger.info(f"All Done!'")
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=False)
             page = await browser.new_page()
@@ -323,17 +330,11 @@ async def main(bot_command: str, channel_url: str):
             logger.info("Successfully logged into Discord.")
             await asyncio.sleep(random.randint(1, 5))
 
-            # Opening JSON file
-            f = open("../midjourney.json")
-            # returns JSON object as a dictionary
-            needData = json.load(f)
             k = 0
             for need in needData:
                 while True:
                     try:
-                        logger.info(
-                            f"checking if dir exist: need-images/need-{need['flaskId']} "
-                        )
+                        logger.info(f"checking if dir exist:/need-{need['flaskId']} ")
 
                         if (
                             not os.path.isdir(f"need-images/need-{need['flaskId']}")
